@@ -1,0 +1,30 @@
+<div class="form-group {{ $errors->has('land_type') ? ' has-error' : '' }}">
+    <label>Land Type <span class="required">*</span></label>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input list="land_type" oninput="getLandType()" placeholder="Select family" id="land_type-value" required class="form-control">
+        <datalist id="land_type">
+            @foreach($LandTypes as $types)
+                <option data-value="{{$types->land_type_id}}">{{$types->land_type }}</option>
+            @endforeach
+        </datalist>
+        <input type="hidden" name="land_type_id" id="land_type_id"/>
+    </div>
+    @if ($errors->has('land_type'))
+    <span class="help-block">{{ $errors->first('land_type') }}</span>
+    @endif
+</div>
+
+<script>
+    // this gets the LandtypeId of selected landType
+     getLandType =()=>{
+            console.log("changed");
+                let current_value = document.getElementById("land_type-value").value;
+                let land_type_lists = document.getElementById("land_type").childNodes;
+                for(let land_type_list of Array.from(land_type_lists)){
+                   if(current_value == land_type_list.text ){
+                       document.getElementById("land_type_id").value = land_type_list.getAttribute("data-value");
+                   } 
+                }
+           }
+</script>
